@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "identifier": "com.limitless.pulsecal",
   "build": {
-    "frontendDist": "dist",
+    "frontendDist": "../dist",
     "devUrl": "http://localhost:5173"
   },
   "app": {
@@ -20,7 +20,9 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": ["icons/icon.png"]
+    "icon": [
+      "icons/icon.png"
+    ]
   },
   "plugins": {
     "sql": {
