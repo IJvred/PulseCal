@@ -1,4 +1,4 @@
-import Database from 'tauri-plugin-sql-api'
+import Database from '@tauri-apps/plugin-sql'
 
 export type DB = Awaited<ReturnType<typeof Database.load>>
 let dbPromise: Promise<DB> | null = null
