@@ -3,37 +3,14 @@
   "productName": "PulseCal",
   "version": "0.1.0",
   "identifier": "com.limitless.pulsecal",
-  "build": {
-    "frontendDist": "../dist",
-    "devUrl": "http://localhost:5173"
-  },
-  "app": {
-    "windows": [
-      {
-        "title": "PulseCal",
-        "width": 1200,
-        "height": 800,
-        "resizable": true
-      }
-    ]
-  },
+  "build": { "frontendDist": "../dist", "devUrl": "http://localhost:5173" },
+  "app": { "windows": [{ "title": "PulseCal", "width": 1200, "height": 800, "resizable": true }] },
   "bundle": {
     "active": true,
     "targets": "all",
-    "icon": [
-      "icons/icon.png"
-    ]
+    "icon": ["icons/icon.ico", "icons/icon.png"]   // <— THIS line is required
   },
   "plugins": {
-    "sql": {
-      "default": {
-        "preload": [
-          {
-            "name": "sqlite:pulsecal.db",
-            "path": "sqlite:pulsecal.db"
-          }
-        ]
-      }
-    }
+    "sql": { "default": { "preload": [{ "name": "sqlite:pulsecal.db", "path": "sqlite:pulsecal.db" }] } }
   }
 }
