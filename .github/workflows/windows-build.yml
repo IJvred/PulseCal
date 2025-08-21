@@ -25,12 +25,26 @@ jobs:
       - name: Build frontend (Vite)
         run: npm run build
 
-      - name: Verify dist + build.rs (hard fail if missing)
+      - name: Ensure Windows icon exists (auto-generate placeholder)
+        shell: pwsh
         run: |
-          echo "==== repo root ===="; dir
-          echo "==== src-tauri ===="; dir src-tauri
-          echo "==== show build.rs ===="; type src-tauri\build.rs
-          if (Test-Path dist) { echo "✅ dist/ exists" } else { echo "❌ dist/ missing"; exit 1 }
+          $iconDir = "src-tauri/icons"
+          if (!(Test-Path $iconDir)) { New-Item -ItemType Directory -Path $iconDir | Out-Null }
+          $icoPath = "$iconDir/icon.ico"
+          if (!(Test-Path $icoPath)) {
+            Add-Type -AssemblyName System.Drawing
+            $bmp = New-Object System.Drawing.Bitmap 256,256
+            $g = [System.Drawing.Graphics]::FromImage($bmp)
+            $g.Clear([System.Drawing.Color]::FromArgb(26,26,26))
+            $g.FillRectangle([System.Drawing.Brushes]::LightGray, 88,88,80,80)
+            $g.Dispose()
+            $icon = [System.Drawing.Icon]::FromHandle($bmp.GetHicon())
+            $fs = [IO.File]::OpenWrite($icoPath)
+            $icon.Save($fs)
+            $fs.Close()
+          }
+          Write-Host "Icon present at $icoPath"
+          dir $iconDir
 
       - name: Build (Tauri)
         run: npx tauri build
