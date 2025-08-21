@@ -25,9 +25,12 @@ jobs:
       - name: Build frontend (Vite)
         run: npm run build
 
-      - name: Verify dist exists
+      - name: Verify dist + build.rs (hard fail if missing)
         run: |
-          if (Test-Path dist) { echo "✅ dist/ exists" } else { echo "❌ dist/ missing"; dir; exit 1 }
+          echo "==== repo root ===="; dir
+          echo "==== src-tauri ===="; dir src-tauri
+          echo "==== show build.rs ===="; type src-tauri\build.rs
+          if (Test-Path dist) { echo "✅ dist/ exists" } else { echo "❌ dist/ missing"; exit 1 }
 
       - name: Build (Tauri)
         run: npx tauri build
